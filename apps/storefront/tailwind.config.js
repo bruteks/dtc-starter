@@ -11,6 +11,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        bruteks: {
+          dark: '#111827',
+          blue: '#0A2540',
+          accent: '#00D4FF',
+        }
+      },
       transitionProperty: {
         width: "width margin",
         height: "height",
