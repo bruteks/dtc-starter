@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
 import "styles/globals.css"
