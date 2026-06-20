@@ -3,8 +3,6 @@
 import { addToCart } from "@lib/data/cart"
 import { useIntersection } from "@lib/hooks/use-in-view"
 import { HttpTypes } from "@medusajs/types"
-import { Button } from "@modules/common/components/ui"
-import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/product-actions/option-select"
 import { isEqual } from "lodash"
 import { useParams, usePathname, useSearchParams } from "next/navigation"
@@ -94,30 +92,18 @@ export default function ProductActions({
 
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
-    // If we don't manage inventory, we can always add to cart
-    if (selectedVariant && !selectedVariant.manage_inventory) {
-      return true
-    }
-
-    // If we allow back orders on the variant, we can add to cart
-    if (selectedVariant?.allow_backorder) {
-      return true
-    }
-
-    // If there is inventory available, we can add to cart
+    if (selectedVariant && !selectedVariant.manage_inventory) return true
+    if (selectedVariant?.allow_backorder) return true
     if (
       selectedVariant?.manage_inventory &&
       (selectedVariant?.inventory_quantity || 0) > 0
     ) {
       return true
     }
-
-    // Otherwise, we can't add to cart
     return false
   }, [selectedVariant])
 
   const actionsRef = useRef<HTMLDivElement>(null)
-
   const inView = useIntersection(actionsRef, "0px")
 
   // add the selected variant to the cart
@@ -137,13 +123,15 @@ export default function ProductActions({
 
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
+      <div className="flex flex-col gap-y-6" ref={actionsRef}>
+        
+        {/* Variant Selection (e.g., Size, Hardware Specs) */}
         <div>
           {(product.variants?.length ?? 0) > 1 && (
             <div className="flex flex-col gap-y-4">
               {(product.options || []).map((option) => {
                 return (
-                  <div key={option.id}>
+                  <div key={option.id} className="text-white">
                     <OptionSelect
                       option={option}
                       current={options[option.id]}
@@ -155,45 +143,21 @@ export default function ProductActions({
                   </div>
                 )
               })}
-              <Divider />
+              <div className="w-full h-px bg-white/10 my-2"></div>
             </div>
           )}
         </div>
 
-        <ProductPrice product={product} variant={selectedVariant} />
+        {/* Dynamic Pricing Display */}
+        <div className="text-2xl font-bold tracking-wide text-bruteks-accent drop-shadow-[0_0_8px_rgba(0,212,255,0.2)]">
+          <ProductPrice product={product} variant={selectedVariant} />
+        </div>
 
-        <Button
+        {/* High-End Interactive Call to Action */}
+        <button
           onClick={handleAddToCart}
-          disabled={
-            !inStock ||
-            !selectedVariant ||
-            !!disabled ||
-            isAdding ||
-            !isValidVariant
-          }
-          variant="primary"
-          className="w-full h-10"
-          isLoading={isAdding}
-          data-testid="add-product-button"
-        >
-          {!selectedVariant && !options
-            ? "Select variant"
-            : !inStock || !isValidVariant
-            ? "Out of stock"
-            : "Add to cart"}
-        </Button>
-        <MobileActions
-          product={product}
-          variant={selectedVariant}
-          options={options}
-          updateOptions={setOptionValue}
-          inStock={inStock}
-          handleAddToCart={handleAddToCart}
-          isAdding={isAdding}
-          show={!inView}
-          optionsDisabled={!!disabled || isAdding}
-        />
-      </div>
-    </>
-  )
-}
+          disabled={!inStock || !selectedVariant || !!disabled || isAdding || !isValidVariant}
+          className={`w-full h-14 flex items-center justify-center rounded-full font-semibold uppercase tracking-widest transition-all duration-300 
+            ${
+              (!inStock || !isValidVariant || disabled || isAdding)
+                ? "bg-white/5 border border-white/10 text-gray-500 cursor-not-allowed"

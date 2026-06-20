@@ -16,25 +16,34 @@ const StoreTemplate = ({
   countryCode: string
 }) => {
   const pageNumber = page ? parseInt(page) : 1
-  const sort = sortBy || "created_at"
 
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
-      <RefinementList sortBy={sort} />
-      <div className="w-full">
-        <div className="mb-8 text-2xl-semi">
-          <h1 data-testid="store-page-title">All products</h1>
+    // Added a relative wrapper and expanded top padding to clear the floating navbar
+    <div className="flex flex-col small:flex-row small:items-start py-12 md:py-24 content-container gap-8 relative min-h-screen">
+      
+      {/* The Sticky Glass Sidebar for Filtering */}
+      <div className="small:sticky small:top-28 w-full small:w-[280px] glass-panel p-6 shrink-0 z-10 transition-all duration-300">
+        <RefinementList sortBy={sortBy || "created_at"} data-testid="sort-by-container" />
+      </div>
+
+      {/* Main Product Grid Area */}
+      <div className="w-full flex-1">
+        
+        {/* Enterprise Grade Page Header */}
+        <div className="mb-8 pb-4 border-b border-white/10">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-widest uppercase text-white drop-shadow-md" data-testid="store-page-title">
+            Digital <span className="text-bruteks-accent">&</span> Hardware Assets
+          </h1>
         </div>
+
         <Suspense fallback={<SkeletonProductGrid />}>
           <PaginatedProducts
-            sortBy={sort}
+            sortBy={sortBy || "created_at"}
             page={pageNumber}
             countryCode={countryCode}
           />
         </Suspense>
+
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import repeat from "@lib/util/repeat"
 import { HttpTypes } from "@medusajs/types"
-import { Heading, Table } from "@modules/common/components/ui"
+import { Table } from "@modules/common/components/ui"
 
 import Item from "@modules/cart/components/item"
 import SkeletonLineItem from "@modules/skeletons/components/skeleton-line-item"
@@ -13,19 +13,21 @@ const ItemsTemplate = ({ cart }: ItemsTemplateProps) => {
   const items = cart?.items
   return (
     <div>
-      <div className="pb-3 flex items-center">
-        <Heading className="text-[2rem] leading-[2.75rem]">Cart</Heading>
+      <div className="pb-6 mb-6 border-b border-white/10 flex items-center">
+        <h2 className="text-xl font-semibold text-white tracking-wide uppercase">
+          Selected Assets
+        </h2>
       </div>
       <Table>
-        <Table.Header className="border-t-0">
-          <Table.Row className="text-ui-fg-subtle txt-medium-plus">
-            <Table.HeaderCell className="!pl-0">Item</Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>Quantity</Table.HeaderCell>
-            <Table.HeaderCell className="hidden small:table-cell">
+        <Table.Header className="border-t-0 border-b border-white/10">
+          <Table.Row className="text-gray-400 text-xs tracking-widest uppercase bg-transparent hover:bg-transparent">
+            <Table.HeaderCell className="!pl-0 bg-transparent">Item</Table.HeaderCell>
+            <Table.HeaderCell className="bg-transparent"></Table.HeaderCell>
+            <Table.HeaderCell className="bg-transparent">Quantity</Table.HeaderCell>
+            <Table.HeaderCell className="hidden small:table-cell bg-transparent">
               Price
             </Table.HeaderCell>
-            <Table.HeaderCell className="!pr-0 text-right">
+            <Table.HeaderCell className="!pr-0 text-right bg-transparent">
               Total
             </Table.HeaderCell>
           </Table.Row>
