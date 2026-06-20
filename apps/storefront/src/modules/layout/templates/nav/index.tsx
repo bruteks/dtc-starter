@@ -16,29 +16,36 @@ export default async function Nav() {
   ])
 
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
-        <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
+    // Wrapper creates the floating gap at the top and centers the pill
+    <div className="sticky top-4 inset-x-0 z-50 group px-4 sm:px-6 md:px-8 flex justify-center">
+      
+      {/* The Enterprise Glass Pill */}
+      <header className="relative h-16 w-full max-w-[1440px] mx-auto transition-all duration-300 ease-out bg-bruteks-card backdrop-blur-glass border border-bruteks-border shadow-glass rounded-2xl">
+        <nav className="text-white flex items-center justify-between w-full h-full px-6 text-sm font-semibold tracking-wide">
+          
+          {/* Left: Mobile / Side Menu */}
           <div className="flex-1 basis-0 h-full flex items-center">
-            <div className="h-full">
+            <div className="h-full flex items-center">
               <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
             </div>
           </div>
 
+          {/* Center: Bruteks Brand Mark */}
           <div className="flex items-center h-full">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              className="text-2xl font-bold tracking-widest hover:text-bruteks-accent transition-colors duration-300 uppercase"
               data-testid="nav-store-link"
             >
-              Medusa Store
+              BRUTEKS
             </LocalizedClientLink>
           </div>
 
+          {/* Right: Account & Cart Actions */}
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
               <LocalizedClientLink
-                className="hover:text-ui-fg-base"
+                className="hover:text-bruteks-accent transition-colors duration-300"
                 href="/account"
                 data-testid="nav-account-link"
               >
@@ -48,7 +55,7 @@ export default async function Nav() {
             <Suspense
               fallback={
                 <LocalizedClientLink
-                  className="hover:text-ui-fg-base flex gap-2"
+                  className="hover:text-bruteks-accent transition-colors duration-300 flex gap-2"
                   href="/cart"
                   data-testid="nav-cart-link"
                 >
@@ -59,6 +66,7 @@ export default async function Nav() {
               <CartButton />
             </Suspense>
           </div>
+
         </nav>
       </header>
     </div>
