@@ -160,4 +160,35 @@ export default function ProductActions({
           className={`w-full h-14 flex items-center justify-center rounded-full font-semibold uppercase tracking-widest transition-all duration-300 
             ${
               (!inStock || !isValidVariant || disabled || isAdding)
-                ? "bg-white/5 border border-white/10 text-gray-500 cursor-not-allowed"
+                ? "bg-white/5 border border-white/10 text-gray-500 cursor-not-allowed" // Disabled State
+                : "bg-bruteks-accent/10 border border-bruteks-accent/50 text-bruteks-accent hover:bg-bruteks-accent hover:text-bruteks-dark shadow-[0_0_20px_rgba(0,212,255,0.2)] hover:shadow-[0_0_30px_rgba(0,212,255,0.6)]" // Active Glowing State
+            }
+          `}
+          data-testid="add-product-button"
+        >
+          {isAdding ? (
+            <span className="animate-pulse">Processing...</span>
+          ) : !selectedVariant && !options ? (
+            "Select variant"
+          ) : !inStock || !isValidVariant ? (
+            "Out of stock"
+          ) : (
+            "Add to cart"
+          )}
+        </button>
+
+        <MobileActions
+          product={product}
+          variant={selectedVariant}
+          options={options}
+          updateOptions={setOptionValue}
+          inStock={inStock}
+          handleAddToCart={handleAddToCart}
+          isAdding={isAdding}
+          show={!inView}
+          optionsDisabled={!!disabled || isAdding}
+        />
+      </div>
+    </>
+  )
+}
