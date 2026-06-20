@@ -80,4 +80,15 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
       {/* Related Products Section at the bottom */}
       <div
-        className="content-container my-16 small:my-32 border-t border-white/5 pt-16
+        className="content-container my-16 small:my-32 border-t border-white/5 pt-16"
+        data-testid="related-products-container"
+      >
+        <Suspense fallback={<SkeletonRelatedProducts />}>
+          <RelatedProducts product={product} countryCode={countryCode} />
+        </Suspense>
+      </div>
+    </>
+  )
+}
+
+export default ProductTemplate
